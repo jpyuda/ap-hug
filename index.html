@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Insecurity in Cuba — Elliot Yuda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --olive-dark:   #4a5a2a;
+      --olive-mid:    #6b7a3a;
+      --olive-light:  #c5c9a0;
+      --tan:          #e8dcc8;
+      --cream:        #f7f3ec;
+      --rust:         #c8693a;
+      --rust-light:   #e8a070;
+      --stone:        #8b8070;
+      --text:         #2a2a1e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-weight: 300;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--olive-dark);
+      display: flex;
+      gap: 0;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0 1rem;
+    }
+    nav a {
+      color: var(--olive-light);
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.1rem;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      overflow: hidden;
+    }
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #1a2a0a 0%, #2a3a15 60%, #3a4a20 100%);
+      background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      filter: brightness(0.35) saturate(0.7);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8vw 8vw 4vw;
+    }
+    .hero-byline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rust-light);
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      line-height: 0.95;
+      color: #fff;
+      max-width: 14ch;
+    }
+    h1 em {
+      color: var(--rust-light);
+      font-style: normal;
+    }
+    .hero-rule {
+      width: 80px;
+      height: 3px;
+      background: var(--rust);
+      margin-top: 3rem;
+    }
+    .hero-scroll {
+      position: relative;
+      z-index: 2;
+      padding: 2rem 8vw;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 5rem 8vw;
+    }
+    section:nth-child(odd) { background: var(--cream); }
+    section:nth-child(even) { background: #eee8db; }
+
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--olive-dark);
+      line-height: 1.1;
+      margin-bottom: 2.5rem;
+    }
+    .rule {
+      width: 50px;
+      height: 2px;
+      background: var(--rust);
+      margin-bottom: 2rem;
+    }
+
+    /* ── INTRO SECTION ── */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .intro-lede {
+      font-size: clamp(1rem, 1.3vw, 1.2rem);
+      font-weight: 600;
+      color: var(--rust);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      border-left: 4px solid var(--rust);
+      background: rgba(200, 105, 58, 0.06);
+    }
+    .body-text p { margin-bottom: 1.25rem; }
+    .body-text p:last-child { margin-bottom: 0; }
+
+    /* ── CASE STUDY ── */
+    .case-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .stat-card {
+      background: var(--olive-dark);
+      color: #fff;
+      padding: 2.5rem;
+      border-radius: 2px;
+    }
+    .stat-card .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--rust-light);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-card .stat-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--olive-light);
+      margin-bottom: 1.5rem;
+    }
+    .stat-card p {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #d4cfc0;
+    }
+
+    /* ── PAST SOLUTIONS ── */
+    .solutions-section { background: var(--olive-dark) !important; color: #d4d0c0; }
+    .solutions-section h2 { color: var(--tan); }
+    .solutions-section .section-label { color: var(--rust-light); }
+    .solutions-section .rule { background: var(--rust-light); }
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .solution-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 1.75rem;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .solution-card:hover { background: rgba(255,255,255,0.1); }
+    .solution-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--rust-light);
+      margin-bottom: 0.75rem;
+    }
+    .solution-card p { font-size: 0.92rem; line-height: 1.65; }
+    .solution-outcome {
+      margin-top: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rust-light);
+      opacity: 0.8;
+    }
+
+    /* ── MY SOLUTION ── */
+    .my-solution-section { background: var(--tan) !important; }
+    .my-solution-section h2 { color: var(--olive-dark); }
+    .solution-body {
+      max-width: 70ch;
+      font-size: 1.05rem;
+    }
+    .solution-body p { margin-bottom: 1.25rem; }
+    .solution-callout {
+      background: var(--olive-dark);
+      color: var(--tan);
+      padding: 2rem 2.5rem;
+      margin-top: 2.5rem;
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      border-left: 4px solid var(--rust);
+    }
+
+    /* ── HOW TO HELP ── */
+    .help-section { background: #3d4f22 !important; color: #d4d0c0; }
+    .help-section h2 { color: var(--tan); }
+    .help-section .section-label { color: var(--rust-light); }
+    .help-section .rule { background: var(--rust-light); }
+    .help-intro {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      line-height: 1.75;
+      color: var(--olive-light);
+      margin-bottom: 2.5rem;
+      max-width: 70ch;
+    }
+    .org-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .org-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2rem;
+      border-radius: 2px;
+    }
+    .org-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--rust-light);
+      margin-bottom: 0.75rem;
+    }
+    .org-card p { font-size: 0.92rem; line-height: 1.65; margin-bottom: 1.25rem; }
+    .org-card a {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust-light);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+    .org-card a:hover { color: #fff; }
+
+    /* ── CITATIONS ── */
+    .citations-section { background: #2e3b18 !important; color: #b0ad98; }
+    .citations-section h2 { color: var(--tan); }
+    .citations-section .section-label { color: var(--rust-light); }
+    .citations-section .rule { background: var(--rust-light); }
+    .citation-list {
+      list-style: none;
+      display: grid;
+      gap: 1.25rem;
+    }
+    .citation-list li {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      padding-left: 1.5rem;
+      border-left: 2px solid rgba(200,105,58,0.4);
+    }
+    .citation-list a {
+      color: var(--rust-light);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .citation-list a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--olive-dark);
+      color: var(--olive-light);
+      text-align: center;
+      padding: 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .intro-grid, .case-grid { grid-template-columns: 1fr; gap: 2rem; }
+      section { padding: 3.5rem 6vw; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#introduction">Introduction</a>
+  <a href="#case-study">Case Study</a>
+  <a href="#past-solutions">Past Solutions</a>
+  <a href="#my-solution">My Solution</a>
+  <a href="#how-to-help">How to Help</a>
+  <a href="#citations">Citations</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-photo"></div>
+  <div class="hero-content">
+    <p class="hero-byline">AP Human Geography — Elliot Yuda</p>
+    <h1>Food<br><em>Insecurity</em><br>in Cuba</h1>
+    <div class="hero-rule"></div>
+  </div>
+  <div class="hero-scroll">Scroll to read ↓</div>
+</section>
+
+<!-- INTRODUCTION -->
+<section id="introduction">
+  <p class="section-label">01 — Overview</p>
+  <h2>Introduction of Issue</h2>
+  <div class="rule"></div>
+  <div class="intro-grid">
+    <div>
+      <div class="intro-lede">
+        Food insecurity is defined as a condition within a household that is low income and struggles to provide enough food for the people living there to survive comfortably and do basic physical activity like walking and running. There are two different types of food insecurity: low food security and very low food security. Very low food security is a more extreme lack of food.
+      </div>
+    </div>
+    <div class="body-text">
+      <p>Food insecurity can be influenced by income, employment, race/ethnicity, and disability. Another thing that increases risk of food insecurity is limited food in the markets. Ethnicity and race are correlated with food insecurity because minority groups tend to live in areas that have worse neighborhood conditions, lack of access to food, and a lack of transportation.</p>
+      <p>Food insecurity is a large problem because people living with a lack of food security tend to have negative health outcomes like obesity, cancer, diabetes, and more. In addition, children that are food insecure tend to develop worse mental health.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section id="case-study">
+  <p class="section-label">02 — The Situation</p>
+  <h2>Case Study</h2>
+  <div class="rule"></div>
+  <div class="case-grid">
+    <div class="body-text">
+      <p>Cuba has a lot of food insecurity for three main reasons. The first reason they are facing major food insecurity is a lack of fuel in the country to power safe food storage. Another reason they are food insecure is because their economy is collapsing. The lack of income that is normally gathered from tourists is decreasing because of less travel to the country. The last reason they are facing food insecurity is a lack of proper agricultural practices and tools.</p>
+      <p>The lack of fuel in Cuba causes major problems with food because of a lack of electric power in the country. The lack of power is making the food storage there not work and food already bought is spoiling much faster. The unstable economy affects Cuba's food insecurity because of their heavy reliance on imported food. Their economy is weak because of a lack of food to export and the inability to produce foreign currency which lowers trade opportunities. Another reason they are impacted by a struggling economy is the rise of inflation which raises food prices without raising income.</p>
+      <p>The last main reason that Cuba is food insecure is the lack of proper agricultural production. There is a lack of tools and fertilizers used in crops which causes lower production in harvests as well as large post-harvest losses of crops. In turn that causes a loss of food in the Cuban markets. Then the prices of items in the market rise which causes less people to buy it. They are also mainly focusing on trying to support dead land so they can keep farming there as well as providing food for the markets not exporting food for profit.</p>
+    </div>
+    <div>
+      <div class="stat-card">
+        <div class="stat-num">37.8%</div>
+        <div class="stat-label">of Cubans are food insecure</div>
+        <p>All of these factors combine to cause 37.8% of Cubans to be food insecure. They also have under the 5% growth needed for sustainable development into a socialist state.</p>
+        <br>
+        <p>Many Cuban adults' food satisfaction and food insecurity are related to their economic, cultural, and environmental surroundings. Cuba's level of food insecurity is significant enough to be a humanitarian crisis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAST SOLUTIONS -->
+<section id="past-solutions" class="solutions-section">
+  <p class="section-label">03 — What Has Been Tried</p>
+  <h2>Past Solutions</h2>
+  <div class="rule"></div>
+  <p style="margin-bottom:2.5rem; max-width:70ch; font-size:0.95rem;">There are many past solutions and funding programs that tried to help support Cuba and their issue with food insecurity.</p>
+  <div class="solutions-grid">
+    <div class="solution-card">
+      <h3>Obama Administration — US–Cuba Diplomacy</h3>
+      <p>The Obama administration restoring diplomatic relations between Cuba and the US worked for a while because it increased trade between the US and Cuba.</p>
+      <p class="solution-outcome">Outcome: Canceled by the Trump administration because of conflict with Cuba and neighboring countries like Venezuela.</p>
+    </div>
+    <div class="solution-card">
+      <h3>UN World Food Programme</h3>
+      <p>Provided programs in schools to feed kids and food baskets every month to Cuban families in need of food.</p>
+      <p class="solution-outcome">Outcome: Didn't work because the crisis with the markets not having enough food was still there and getting worse. Eventually the program wasn't able to keep up with demand and it ended.</p>
+    </div>
+    <div class="solution-card">
+      <h3>Oxfam — "No More Blockade" Campaign</h3>
+      <p>Fought back against Cuba's food shortages and political situation.</p>
+      <p class="solution-outcome">Outcome: Failed because its goal was to get the government to take action but they never did anything.</p>
+    </div>
+    <div class="solution-card">
+      <h3>Care International</h3>
+      <p>Helped to get women jobs to be able to purchase food and increased the number of people working on farms to produce more food.</p>
+      <p class="solution-outcome">Outcome: Didn't work because it didn't fix the problem of not having enough proper land to farm and not enough food in the markets to buy.</p>
+    </div>
+    <div class="solution-card">
+      <h3>Barnabas Aid &amp; Give2Cuba</h3>
+      <p>Worked to distribute food products to Cuban citizens to help them with food insecurity.</p>
+      <p class="solution-outcome">Outcome: Failed because it did not address the overarching problems causing food insecurity in Cuba.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MY SOLUTION -->
+<section id="my-solution" class="my-solution-section">
+  <p class="section-label">04 — A Path Forward</p>
+  <h2>My Solution</h2>
+  <div class="rule"></div>
+  <div class="solution-body">
+    <p>My idea to solve food insecurity in Cuba relies on the Cuban government taking action to improve food production and reduce reliance on imported foods.</p>
+    <p>For my solution to work, the Cuban government would focus on getting tools and fertilizer to increase agricultural production in the country. Getting the proper tools and fertilizers will allow the citizens to have better harvests and more food brought into the markets to buy. This will lower the cost of food and more people will be able to buy it. This would also reduce the need to import as much food and improve food security because they won't have to rely on other countries.</p>
+    <p>This will also lead Cuba to become more independent which will allow them to grow their economy and support themselves. If they are able to support themselves then they will be able to provide food if there are import shortages.</p>
+    <div class="solution-callout">
+      This would be the best solution to the problem of food insecurity in Cuba because it would solve the problem where it's stemming from and it would increase Cuba's independence.
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO HELP -->
+<section id="how-to-help" class="help-section">
+  <p class="section-label">05 — Take Action</p>
+  <h2>How to Help</h2>
+  <div class="rule"></div>
+  <p class="help-intro">There are also ways to help with this problem including fundraising and contributing to programs helping with the problem. There are three main fundraisers for the issues in Cuba.</p>
+  <div class="org-grid">
+    <div class="org-card">
+      <h3>Caribbean Agroecology Institute</h3>
+      <p>Works to provide sustainable agri-food programs to countries in the Caribbean including Cuba and others.</p>
+      <a href="https://www.caribbeanagroecology.org/donors-and-partners.html" target="_blank" rel="noopener">Donate →</a>
+    </div>
+    <div class="org-card">
+      <h3>Let Cuba Live</h3>
+      <p>An organization whose goal is to help provide solar panels and generators to Cuban hospitals to help counteract the loss of fuel in the country.</p>
+      <a href="https://www.letcubalive.info/donate" target="_blank" rel="noopener">Donate →</a>
+    </div>
+    <div class="org-card">
+      <h3>CUSAN</h3>
+      <p>A group that connects the people of Cuba and the US to create more food and farming systems that are ecologically resilient, economically fair, and socially just through using agroecology.</p>
+      <a href="http://www.agroecologynetwork.org" target="_blank" rel="noopener">Donate →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CITATIONS -->
+<section id="citations" class="citations-section">
+  <p class="section-label">06 — Sources</p>
+  <h2>Citations</h2>
+  <div class="rule"></div>
+  <ul class="citation-list">
+    <li>Cousin, Ertharin. "In Cuba, Food Security Is a Point of Political Pressure-and Solidarity." <em>Chicago Council on Global Affairs</em>, The Chicago Council on Global Affairs, 26 Mar. 2026, <a href="https://globalaffairs.org/commentary/analysis/cuba-food-security-point-political-pressure-and-solidarity" target="_blank" rel="noopener">globalaffairs.org/commentary/analysis/cuba-food-security-point-political-pressure-and-solidarity</a>.</li>
+    <li>Gupta, Hemant. "Organizations Fighting Cuba's Food Shortages." <em>The Borgen Project</em>, 6 Dec. 2024, <a href="https://borgenproject.org/cubas-food-shortages/" target="_blank" rel="noopener">borgenproject.org/cubas-food-shortages/</a>.</li>
+    <li>Nakabayashi, Lauren, et al. "Factors Associated with Food Security and Satisfaction with Food-Related Life among Cuban Adults." <em>West Coast University Journal of Health and Wellness</em>, West Coast University, 16 June 2025, <a href="https://wcujhw.scholasticahq.com/article/123630-factors-associated-with-food-security-and-satisfaction-with-food-related-life-among-cuban-adults" target="_blank" rel="noopener">wcujhw.scholasticahq.com/article/123630</a>.</li>
+    <li>OASH. "Food Insecurity." <em>Food Insecurity — Healthy People 2030</em>, 2020, <a href="https://odphp.health.gov/healthypeople/priority-areas/social-determinants-health/literature-summaries/food-insecurity" target="_blank" rel="noopener">odphp.health.gov/healthypeople/priority-areas/social-determinants-health/literature-summaries/food-insecurity</a>.</li>
+    <li>Oppmann, Patrick. "No Food, No Fuel, No Tourists: Under US Pressure, Life in Cuba Grinds to a Halt." <em>CNN</em>, Cable News Network, 18 Feb. 2026, <a href="https://www.cnn.com/2026/02/18/americas/cuba-us-trump-oil-tourism-intl-latam" target="_blank" rel="noopener">cnn.com/2026/02/18/americas/cuba-us-trump-oil-tourism-intl-latam</a>.</li>
+    <li>Philipp, Jennifer. "Poverty, Fragility and the Rule of Law in Cuba." <em>The Borgen Project</em>, 10 Oct. 2025, <a href="https://borgenproject.org/the-rule-of-law-in-cuba/" target="_blank" rel="noopener">borgenproject.org/the-rule-of-law-in-cuba/</a>.</li>
+    <li>Rodriguez, Andrea. "Rationed Food Kept Cubans Fed during the Cold War. Today an Economic Crisis Has Them Hungry." <em>AP News</em>, 24 Mar. 2024, <a href="https://apnews.com/article/cuba-food-subsidies-libreta-crisis-00f7a5b352514dd4449b99bb0d645384" target="_blank" rel="noopener">apnews.com/article/cuba-food-subsidies-libreta-crisis-00f7a5b352514dd4449b99bb0d645384</a>.</li>
+    <li>UCLG. "«política de Agricultura Urbana» La Habana, Cuba." <em>Cuban Urban Agricultural Policy</em>, 2010, <a href="https://uclg-cisdp.org/sites/default/files/observatory/files/2021-06/Habana_ES.pdf" target="_blank" rel="noopener">uclg-cisdp.org/sites/default/files/observatory/files/2021-06/Habana_ES.pdf</a>.</li>
+    <li>World Food Program. "Cuba: World Food Programme." <em>UN World Food Programme</em>, 2026, <a href="https://www.wfp.org/countries/cuba" target="_blank" rel="noopener">wfp.org/countries/cuba</a>.</li>
+    <li>World Food Program USA. "Cuba." <em>World Food Program USA</em>, 28 Apr. 2026, <a href="https://wfpusa.org/place/cuba/" target="_blank" rel="noopener">wfpusa.org/place/cuba/</a>.</li>
+    <li>Zahniser, Steven, et al. "Cuba's Declining Agricultural Production and Consumption Hit Staple Commodities." <em>Economic Research Service</em>, 29 Oct. 2024, <a href="https://www.ers.usda.gov/data-products/charts-of-note/chart-detail?chartId=110302" target="_blank" rel="noopener">ers.usda.gov/data-products/charts-of-note/chart-detail?chartId=110302</a>.</li>
+    <li>Zahniser, Steven, et al. "Cuba's Deteriorating Food Security and Its Implications for U.S. Agricultural Exports." <em>Economic Research Service</em>, 10 Oct. 2024, <a href="https://www.ers.usda.gov/publications/pub-details?pubid=110175" target="_blank" rel="noopener">ers.usda.gov/publications/pub-details?pubid=110175</a>.</li>
+  </ul>
+</section>
+
+<footer>
+  Food Insecurity in Cuba &nbsp;·&nbsp; Elliot Yuda &nbsp;·&nbsp; AP Human Geography
+</footer>
+
+</body>
+</html>
